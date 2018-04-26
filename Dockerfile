@@ -1,19 +1,17 @@
 FROM "ubuntu:16.04"
 
+# TODO Run Dendro as a separate user instead of root.
+# TODO If you figure out how to run the CMD as a "dendro" user let me know
+
 ######    CONSTANTS    ######
-ENV DENDRO_USER dendro
-ENV HOME /home/${DENDRO_USER}
-ENV NVM_DIR ${HOME}/.nvm
+ENV HOME /home/root
+ENV NVM_DIR $HOME/.nvm
 # ENV COMMIT_HASH 9496630f9cd0fd434655ddf2b527cad3020d9df3
 ENV DENDRO_GITHUB_URL https://github.com/feup-infolab/dendro.git
 ENV DENDRO_INSTALL_DIR /dendro/dendro
 ######    CONSTANTS    ######
 
-# Prepare working directory
-RUN useradd -m ${DENDRO_USER}
-
 WORKDIR $HOME
-
 RUN apt-get update
 
 # Install preliminary dependencies
@@ -37,24 +35,23 @@ RUN apt install oracle-java8-set-default
 
 # create installation dir and make dendro user its owner
 RUN mkdir -p "$DENDRO_INSTALL_DIR"
-RUN chown -R "$DENDRO_USER" "$DENDRO_INSTALL_DIR"
-
-USER "$DENDRO_USER"
 
 # Clone dendro into install dir
 RUN git clone "$DENDRO_GITHUB_URL" "$DENDRO_INSTALL_DIR"
+RUN ls "$DENDRO_INSTALL_DIR"
 
-#Run Dendro Installation
+# Copy dendro startup script
+COPY ./files_for_dendro_container/dendro.sh "$DENDRO_INSTALL_DIR/start_dendro_with_docker.sh"
+# Copy configuration files
+COPY ./files_for_dendro_container/deployment_configs.json "$DENDRO_INSTALL_DIR/conf"
+COPY ./files_for_dendro_container/active_deployment_config.json "$DENDRO_INSTALL_DIR/conf"
+
+# Run Dendro Installation as Dendro user
 WORKDIR $DENDRO_INSTALL_DIR
 RUN "$DENDRO_INSTALL_DIR/conf/scripts/install.sh"
 
-# Copy configuration files
-COPY deployment_configs.json "$DENDRO_INSTALL_DIR/conf"
-COPY active_deployment_config.json "$DENDRO_INSTALL_DIR/conf"
+# Get contents of finalized dendro install directory (debug)
+RUN ls -la "$DENDRO_INSTALL_DIR"
 
-# set the default Node version
-RUN . $NVM_DIR/nvm.sh; nvm use --delete-prefix $(cat $DENDRO_INSTALL_DIR/.nvmrc) \
-    nvm alias default $(cat $DENDRO_INSTALL_DIR/.nvmrc)
-
-# Start Dendro as dendro user, not root!
-CMD . $NVM_DIR/nvm.sh && nvm use --delete-prefix $(cat $DENDRO_INSTALL_DIR/.nvmrc) && npm start
+# Start Dendro
+CMD [ "ls -la $DENDRO_INSTALL_DIR; $DENDRO_INSTALL_DIR/start_dendro_with_docker.sh" ]

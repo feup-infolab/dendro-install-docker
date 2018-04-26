@@ -1,0 +1,4 @@
+volumes/elasticsearch
+volumes/mysql
+volumes/virtuoso
+volumes/mongo
