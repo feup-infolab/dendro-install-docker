@@ -2,7 +2,7 @@
 
 # docker build . -t joaorosilva/dendro:master
 # docker run \
-#   --name=xupamos \
+#   --name=dendro \
 #   joaorosilva/dendro:master
 # docker ps -a
 # docker tag joaorosilva/dendro:master joaorosilva/dendro:master
