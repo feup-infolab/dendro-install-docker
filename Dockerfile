@@ -1,17 +1,21 @@
 FROM "ubuntu:16.04"
 
-# TODO Run Dendro as a separate user instead of root.
-# TODO If you figure out how to run the CMD as a "dendro" user let me know
-
 ######    CONSTANTS    ######
-ENV HOME /home/root
-ENV NVM_DIR $HOME/.nvm
+ENV DENDRO_USER dendro
+ENV HOME /home/${DENDRO_USER}
+ENV NVM_DIR ${HOME}/.nvm
 # ENV COMMIT_HASH 9496630f9cd0fd434655ddf2b527cad3020d9df3
 ENV DENDRO_GITHUB_URL https://github.com/feup-infolab/dendro.git
 ENV DENDRO_INSTALL_DIR /dendro/dendro
+ENV DENDRO_USER_GROUP dendro
 ######    CONSTANTS    ######
 
+# Prepare working directory
+RUN useradd -m "$DENDRO_USER"
+RUN usermod "$DENDRO_USER" -g "$DENDRO_USER_GROUP"
+
 WORKDIR $HOME
+
 RUN apt-get update
 
 # Install preliminary dependencies
@@ -46,12 +50,28 @@ COPY ./files_for_dendro_container/dendro.sh "$DENDRO_INSTALL_DIR/start_dendro_wi
 COPY ./files_for_dendro_container/deployment_configs.json "$DENDRO_INSTALL_DIR/conf"
 COPY ./files_for_dendro_container/active_deployment_config.json "$DENDRO_INSTALL_DIR/conf"
 
-# Run Dendro Installation as Dendro user
+# Set permissions on installation folder
+USER root
+RUN chown -R "$DENDRO_USER":"$DENDRO_USER_GROUP" "$DENDRO_INSTALL_DIR"
+RUN chmod 0777 "$DENDRO_INSTALL_DIR/start_dendro_with_docker.sh"
+
+# Run Dendro Installation
+USER "$DENDRO_USER"
 WORKDIR $DENDRO_INSTALL_DIR
 RUN "$DENDRO_INSTALL_DIR/conf/scripts/install.sh"
+
+# Set permissions on installation folder (again)
+USER root
+RUN chown -R "$DENDRO_USER":"$DENDRO_USER_GROUP" "$DENDRO_INSTALL_DIR"
+RUN chmod 0777 "$DENDRO_INSTALL_DIR/start_dendro_with_docker.sh"
 
 # Get contents of finalized dendro install directory (debug)
 RUN ls -la "$DENDRO_INSTALL_DIR"
 
+# Run Dendro
+USER "$DENDRO_USER"
+WORKDIR $DENDRO_INSTALL_DIR
+# RUN $DENDRO_INSTALL_DIR/start_dendro_with_docker.sh
+
 # Start Dendro
-CMD [ "ls -la $DENDRO_INSTALL_DIR; $DENDRO_INSTALL_DIR/start_dendro_with_docker.sh" ]
+CMD [ "/bin/bash", "/dendro/dendro/start_dendro_with_docker.sh" ]

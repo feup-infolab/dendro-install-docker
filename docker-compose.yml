@@ -56,11 +56,12 @@ services:
 
   dendro:
     container_name: dendro
-    image: dendro:master
+    image: joaorosilva/dendro:master
     ports:
       - "3001:3001"
     volumes:
-      - ./volumes/dendro:/dendro/dendro
+      - ./volumes/dendro:/dendro/dendro/temp
+      - ./volumes/dendro:/dendro/dendro/temp_uploads
     depends_on:
       - virtuoso
       - mysql

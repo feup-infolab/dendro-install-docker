@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
-docker build . -t dendro:master
-docker tag dendro joaorosilva/dendro:master
+# docker build . -t joaorosilva/dendro:master
+# docker run \
+#   --name=xupamos \
+#   joaorosilva/dendro:master
+# docker ps -a
+# docker tag joaorosilva/dendro:master joaorosilva/dendro:master
 docker-compose up
