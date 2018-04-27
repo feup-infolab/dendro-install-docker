@@ -2,8 +2,13 @@
 
 VOLUMES_FOLDER="$(pwd)/volumes"
 
-docker stop "$(docker ps -aq)"
-docker rm "$(docker ps -aq)"
+# Stop all containers
+docker stop $(docker ps -a -q)
+# Delete all containers
+docker rm $(docker ps -a -q)
+# Delete all images
+docker rmi $(docker images -q)
+
 docker system prune -f -a
 
 cd "$VOLUMES_FOLDER" || exit "There is no $VOLUMES_FOLDER folder!"

@@ -45,12 +45,12 @@ RUN git clone "$DENDRO_GITHUB_URL" "$DENDRO_INSTALL_DIR"
 RUN ls "$DENDRO_INSTALL_DIR"
 
 # Copy dendro startup script
-COPY ./files_for_dendro_container/dendro.sh "$DENDRO_INSTALL_DIR/start_dendro_with_docker.sh"
+COPY ./files_for_dendro_container/dendro.sh "$DENDRO_INSTALL_DIR/dendro.sh"
 
 # Set permissions on installation folder
 USER root
 RUN chown -R "$DENDRO_USER":"$DENDRO_USER_GROUP" "$DENDRO_INSTALL_DIR"
-RUN chmod 0777 "$DENDRO_INSTALL_DIR/start_dendro_with_docker.sh"
+RUN chmod 0777 "$DENDRO_INSTALL_DIR/dendro.sh"
 
 # Run Dendro Installation
 USER "$DENDRO_USER"
@@ -65,7 +65,7 @@ COPY ./files_for_dendro_container/deployment_configs.json "$DENDRO_INSTALL_DIR/c
 COPY ./files_for_dendro_container/active_deployment_config.json "$DENDRO_INSTALL_DIR/conf"
 
 RUN chown -R "$DENDRO_USER":"$DENDRO_USER_GROUP" "$DENDRO_INSTALL_DIR"
-RUN chmod 0777 "$DENDRO_INSTALL_DIR/start_dendro_with_docker.sh"
+RUN chmod 0777 "$DENDRO_INSTALL_DIR/dendro.sh"
 
 # Get contents of finalized dendro install directory (debug)
 # RUN ls -la "$DENDRO_INSTALL_DIR"
@@ -73,7 +73,7 @@ RUN chmod 0777 "$DENDRO_INSTALL_DIR/start_dendro_with_docker.sh"
 # Run Dendro
 USER "$DENDRO_USER"
 WORKDIR $DENDRO_INSTALL_DIR
-# RUN $DENDRO_INSTALL_DIR/start_dendro_with_docker.sh
+# RUN $DENDRO_INSTALL_DIR/dendro.sh
 
 # Start Dendro
-CMD [ "/bin/bash", "/dendro/dendro/start_dendro_with_docker.sh" ]
+CMD [ "/bin/bash", "/dendro/dendro/dendro.sh" ]

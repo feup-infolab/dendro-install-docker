@@ -18,7 +18,7 @@ services:
 
   virtuoso:
     container_name: virtuoso-dendro
-    image: joaorosilva/virtuoso:7.2.4-dendro
+    image: joaorosilva/virtuoso:7.2.4-for-dendro-0.3
     ports:
       - "8890:8890"
       - "1111:1111"
@@ -27,8 +27,6 @@ services:
       - "VIRT_Parameters_CheckpointSyncMode=2"
       - "VIRT_Parameters_PageMapCheck=1"
       - "VIRT_Parameters_CheckpointInterval=0"
-    volumes:
-      - ./volumes/virtuoso:/data:consistent
     networks:
       - dendro
 
@@ -59,14 +57,11 @@ services:
     image: joaorosilva/dendro:master
     ports:
       - "3001:3001"
-    volumes:
-      - ./volumes/dendro/temp:/dendro/dendro/temp:consistent
-      - ./volumes/dendro/temp_uploads:/dendro/dendro/temp_uploads:consistent
     depends_on:
-      - virtuoso
-      - mysql
       - elasticsearch
+      - mysql
       - mongodb
+      - virtuoso
     networks:
       - dendro
 
