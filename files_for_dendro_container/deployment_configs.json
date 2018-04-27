@@ -1,11 +1,11 @@
 {
     "docker": {
         "port": 3001,
-        "host": "127.0.0.1:3001",
+        "host": "dendro:3001",
         "crypto": {
             "secret": "THF4A9JfsMbTaHYefVtquzFbrdNUMSbTHF4A9JfsMbTaHYefVtquzFbrdNUMSbpHeRjKE24Tyk2LqxVa3ERyGAAaP8j7gXArZsJk4bjKj8F4YZnCqAyaw9auPn6ahDwc4scLCrayLX9BsYwqXaMKrfW82WdqD5pYApFaQ9JNCqQ25qb75GKfAZSgvNuzFXKT6mGGw6qk63HqjgGwty4qx4QkYXxNCsbez4jwzeRc58AfSvzXZfEf8asSNWhhfEBWCvCeAJs3BGZFFFuwZ7EAVhmyu7NqqzHpHeRjKE24Tyk2LqxVa3ERyGAAaP8j7gXArZsJk4bjKj8F4YZnCqAyaw9auPn6ahDwc4scLCrayLX9BsYwqXaMKrfW82WdqD5pYApFaQ9JNCqQ25qb75GKfAZSgvNuzFXKT6mGGw6qk63HqjgGwty4qx4QkYXxNCsbez4jwzeRc58AfSvzXZfEf8asSNWhhfEBWCvCeAJs3BGZFFFuwZ7EAVhmyu7NqqzAIAIMARIA"
         },
-        "baseUri": "http://127.0.0.1:3001",
+        "baseUri": "http://dendro:3001",
         "environment": "development",
         "skipDescriptorValuesValidation": false,
         "eudatBaseUrl": "https://trng-b2share.eudat.eu",
@@ -13,11 +13,11 @@
         "eudatCommunityId": "e9b9792e-79fb-4b07-b6b4-b9c2bd06d095",
         "sendGridUser": "__FIXME",
         "sendGridPassword": "__FIXME",
-        "elasticSearchHost": "192.168.56.249",
+        "elasticSearchHost": "elasticsearch-dendro",
         "elasticSearchPort": "9200",
         "datastore": {
-            "database": "127.0.0.1:3001_datastore",
-            "host": "127.0.0.1",
+            "database": "dendro:3001_datastore",
+            "host": "mongodb-dendro",
             "port": "27017",
             "id": "default",
             "log": {
@@ -25,8 +25,8 @@
             }
         },
         "ontologies_cache": {
-            "database": "127.0.0.1:3001_ontologies",
-            "host": "127.0.0.1",
+            "database": "dendro:3001_ontologies",
+            "host": "mongodb-dendro",
             "port": "27017",
             "id": "default"
         },
@@ -41,26 +41,26 @@
                 "active": true,
                 "instances": {
                     "default": {
-                        "database": "127.0.0.1:3001",
+                        "database": "dendro:3001",
                         "collection": "default_cache",
                         "clear_on_startup": true,
-                        "host": "127.0.0.1",
+                        "host": "mongodb-dendro",
                         "port": "27017",
                         "id": "default"
                     },
                     "social": {
-                        "database": "127.0.0.1:3001",
+                        "database": "dendro:3001",
                         "collection": "social_cache",
                         "clear_on_startup": true,
-                        "host": "127.0.0.1",
+                        "host": "mongodb-dendro",
                         "port": "27017",
                         "id": "social"
                     },
                     "notifications": {
-                        "database": "127.0.0.1:3001",
+                        "database": "dendro:3001",
                         "collection": "notifications_cache",
                         "clear_on_startup": true,
-                        "host": "127.0.0.1",
+                        "host": "mongodb-dendro",
                         "port": "27017",
                         "id": "notifications"
                     }
@@ -71,7 +71,7 @@
                 "cache_period_in_seconds": 3600
             }
         },
-        "virtuosoHost": "127.0.0.1",
+        "virtuosoHost": "virtuoso-dendro",
         "virtuosoPort": "8890",
         "virtuosoISQLPort": "1111",
         "virtuosoConnector": "jdbc",
@@ -80,10 +80,10 @@
             "password": "dba"
         },
         "virtuosoSQLLogLevel": 3,
-        "mongoDBHost": "127.0.0.1",
+        "mongoDBHost": "mongodb-dendro",
         "mongoDbPort": "27017",
-        "mongoDbCollectionName": "127.0.0.1:3001_files",
-        "mongoDBSessionStoreCollection": "127.0.0.1:3001_sessions",
+        "mongoDbCollectionName": "mongodb-dendro:3001_files",
+        "mongoDBSessionStoreCollection": "mongodb-dendro:3001_sessions",
         "mongoDbVersion": "",
         "mongoDBAuth": {
             "user": "",
@@ -91,19 +91,19 @@
         },
         "storageDefaults" : {
           "storageType" : "mongoDB",
-          "host": "127.0.0.1",
+          "host": "mongodb-dendro",
           "port": "27017",
-          "collectionName": "127.0.0.1:3001_files",
+          "collectionName": "mongodb-dendro:3001_files",
           "username": "",
           "password": ""
         },
-        "mySQLHost": "127.0.0.1",
+        "mySQLHost": "mysql-dendro",
         "mySQLPort": "3306",
         "mySQLAuth": {
             "user": "root",
             "password": "r00t_p4ssw0rd"
         },
-        "mySQLDBName": "dendroVagrantDemo",
+        "mySQLDBName": "dendro",
         "maxUploadSize": 1073741824,
         "maxProjectSize": 5368709120,
         "maxSimultaneousConnectionsToDb": 1,
@@ -262,7 +262,7 @@
             "modes": {
                 "dendro_recommender": {
                     "active": false,
-                    "host": "127.0.0.1",
+                    "host": "no-host",
                     "port": "9000",
                     "log_modes": {
                         "phase_1": {

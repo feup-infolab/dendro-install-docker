@@ -12,7 +12,7 @@ services:
       - "http.host=0.0.0.0"
       - "transport.host=127.0.0.1"
     volumes:
-      - ./volumes/elasticsearch:/usr/share/elasticsearch/data
+      - ./volumes/elasticsearch:/usr/share/elasticsearch/data:consistent
     networks:
       - dendro
 
@@ -28,7 +28,7 @@ services:
       - "VIRT_Parameters_PageMapCheck=1"
       - "VIRT_Parameters_CheckpointInterval=0"
     volumes:
-      - ./volumes/virtuoso:/data
+      - ./volumes/virtuoso:/data:consistent
     networks:
       - dendro
 
@@ -40,7 +40,7 @@ services:
     environment:
       - "MYSQL_ROOT_PASSWORD=r00t_p4ssw0rd"
     volumes:
-      - ./volumes/mysql:/var/lib/mysql
+      - ./volumes/mysql:/var/lib/mysql:consistent
     networks:
       - dendro
 
@@ -60,8 +60,8 @@ services:
     ports:
       - "3001:3001"
     volumes:
-      - ./volumes/dendro:/dendro/dendro/temp
-      - ./volumes/dendro:/dendro/dendro/temp_uploads
+      - ./volumes/dendro/temp:/dendro/dendro/temp:consistent
+      - ./volumes/dendro/temp_uploads:/dendro/dendro/temp_uploads:consistent
     depends_on:
       - virtuoso
       - mysql

@@ -35,7 +35,7 @@ RUN \
   rm -rf /var/cache/oracle-jdk8-installer
 
 # Set Java Oracle SDK 8 as default Java
-RUN apt install oracle-java8-set-default
+RUN apt-get install oracle-java8-set-default
 
 # create installation dir and make dendro user its owner
 RUN mkdir -p "$DENDRO_INSTALL_DIR"
@@ -46,9 +46,6 @@ RUN ls "$DENDRO_INSTALL_DIR"
 
 # Copy dendro startup script
 COPY ./files_for_dendro_container/dendro.sh "$DENDRO_INSTALL_DIR/start_dendro_with_docker.sh"
-# Copy configuration files
-COPY ./files_for_dendro_container/deployment_configs.json "$DENDRO_INSTALL_DIR/conf"
-COPY ./files_for_dendro_container/active_deployment_config.json "$DENDRO_INSTALL_DIR/conf"
 
 # Set permissions on installation folder
 USER root
@@ -62,11 +59,16 @@ RUN "$DENDRO_INSTALL_DIR/conf/scripts/install.sh"
 
 # Set permissions on installation folder (again)
 USER root
+
+# Copy configuration files
+COPY ./files_for_dendro_container/deployment_configs.json "$DENDRO_INSTALL_DIR/conf"
+COPY ./files_for_dendro_container/active_deployment_config.json "$DENDRO_INSTALL_DIR/conf"
+
 RUN chown -R "$DENDRO_USER":"$DENDRO_USER_GROUP" "$DENDRO_INSTALL_DIR"
 RUN chmod 0777 "$DENDRO_INSTALL_DIR/start_dendro_with_docker.sh"
 
 # Get contents of finalized dendro install directory (debug)
-RUN ls -la "$DENDRO_INSTALL_DIR"
+# RUN ls -la "$DENDRO_INSTALL_DIR"
 
 # Run Dendro
 USER "$DENDRO_USER"
