@@ -1,5 +1,13 @@
 # dendro-install-docker
-Files for installing Dendro via Docker
+Files for installing [Dendro](https://github.com/feup-infolab/dendro) via Docker.
+
+## What is Dendro?
+
+Dendro is the software powering [INESC TEC](https://dendro.inesctec.pt) and the [University of Porto](https://dendro-rdm.up.pt) data staging platforms. It allows researchers to manage research data in preparation for deposit in any research data repository. "Upload files and fill in metadata once, deposit anywhere you like".
+
+## The user interface
+
+![dendro UI](https://raw.githubusercontent.com/feup-infolab/dendro/master/public/images/Screen%20Shot%202017-04-04%20at%2012.22.08.png "Dendro UI")
 
 ## Instructions 
 
