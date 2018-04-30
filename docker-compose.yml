@@ -54,7 +54,7 @@ services:
 
   dendro:
     container_name: dendro
-    image: joaorosilva/dendro:master
+    image: joaorosilva/dendro:0.3
     ports:
       - "3001:3001"
     depends_on:
