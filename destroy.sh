@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-VOLUMES_FOLDER="$(pwd)/volumes"
-
 # Stop all containers
 docker stop $(docker ps -a -q)
 # Delete all containers
@@ -11,7 +9,11 @@ docker rmi $(docker images -q)
 
 docker system prune -f -a
 
-cd "$VOLUMES_FOLDER" || exit "There is no $VOLUMES_FOLDER folder!"
+cd "$(pwd)/volumes" || exit "There is no $(pwd)/volumes folder!"
 
 #clean data directories
-rm -rf elasticsearch mongo mysql virtuoso dendro
+rm -rf "$(pwd)/volumes/elasticsearch" 
+rm -rf "$(pwd)/volumes/mongo"
+rm -rf "$(pwd)/volumes/mysql" 
+rm -rf "$(pwd)/volumes/virtuoso" 
+rm -rf "$(pwd)/volumes/dendro"

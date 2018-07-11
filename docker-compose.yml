@@ -3,7 +3,7 @@ version: '3'
 services:
   elasticsearch:
     container_name: elasticsearch-dendro
-    image: elasticsearch:2.4.6
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.2
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -44,17 +44,23 @@ services:
 
   mongodb:
     container_name: mongodb-dendro
-    image: mongo:3.4.10
+    image: mongo:3.6.0
     ports:
-      - "27017:27017"
+      - 27017:27017
+    environment: 
+      - MONGO_INITDB_DATABASE=admin
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=34857q98efhlajwehrlaeroiu2yq3948q2uweoiqwherluqywioerqhw0p92874983724rhqwelrhqweiuryoiqwerhlqwhjeflkawejrp9023475823y4rjhelkjrheiouryi
     volumes:
       - ./volumes/mongo:/data/db
     networks:
       - dendro
+    command: mongod --smallfiles --bind_ip_all
+
 
   dendro:
     container_name: dendro
-    image: joaorosilva/dendro:0.3
+    image: joaorosilva/dendro:0.4
     ports:
       - "3001:3001"
     depends_on:

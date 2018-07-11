@@ -22,13 +22,17 @@
             "id": "default",
             "log": {
                 "log_datastore_ops": false
-            }
+            },
+            "username": "admin",
+            "password": "34857q98efhlajwehrlaeroiu2yq3948q2uweoiqwherluqywioerqhw0p92874983724rhqwelrhqweiuryoiqwerhlqwhjeflkawejrp9023475823y4rjhelkjrheiouryi"
         },
         "ontologies_cache": {
             "database": "dendro:3001_ontologies",
             "host": "mongodb-dendro",
             "port": "27017",
-            "id": "default"
+            "id": "default",
+            "username": "admin",
+            "password": "34857q98efhlajwehrlaeroiu2yq3948q2uweoiqwherluqywioerqhw0p92874983724rhqwelrhqweiuryoiqwerhlqwhjeflkawejrp9023475823y4rjhelkjrheiouryi"
         },
         "cache": {
             "active": true,
@@ -46,7 +50,9 @@
                         "clear_on_startup": true,
                         "host": "mongodb-dendro",
                         "port": "27017",
-                        "id": "default"
+                        "id": "default",
+                        "username": "admin",
+                        "password": "34857q98efhlajwehrlaeroiu2yq3948q2uweoiqwherluqywioerqhw0p92874983724rhqwelrhqweiuryoiqwerhlqwhjeflkawejrp9023475823y4rjhelkjrheiouryi"
                     },
                     "social": {
                         "database": "dendro:3001",
@@ -54,7 +60,9 @@
                         "clear_on_startup": true,
                         "host": "mongodb-dendro",
                         "port": "27017",
-                        "id": "social"
+                        "id": "social",
+                        "username": "admin",
+                        "password": "34857q98efhlajwehrlaeroiu2yq3948q2uweoiqwherluqywioerqhw0p92874983724rhqwelrhqweiuryoiqwerhlqwhjeflkawejrp9023475823y4rjhelkjrheiouryi"
                     },
                     "notifications": {
                         "database": "dendro:3001",
@@ -62,7 +70,9 @@
                         "clear_on_startup": true,
                         "host": "mongodb-dendro",
                         "port": "27017",
-                        "id": "notifications"
+                        "id": "notifications",
+                        "username": "admin",
+                        "password": "34857q98efhlajwehrlaeroiu2yq3948q2uweoiqwherluqywioerqhw0p92874983724rhqwelrhqweiuryoiqwerhlqwhjeflkawejrp9023475823y4rjhelkjrheiouryi"
                     }
                 }
             },
@@ -86,8 +96,8 @@
         "mongoDBSessionStoreCollection": "mongodb-dendro:3001_sessions",
         "mongoDbVersion": "",
         "mongoDBAuth": {
-            "user": "",
-            "password": ""
+            "username": "admin",
+            "password": "34857q98efhlajwehrlaeroiu2yq3948q2uweoiqwherluqywioerqhw0p92874983724rhqwelrhqweiuryoiqwerhlqwhjeflkawejrp9023475823y4rjhelkjrheiouryi"
         },
         "storageDefaults" : {
           "storageType" : "mongoDB",
@@ -237,7 +247,7 @@
         "startup": {
             "load_databases": true,
             "reload_administrators_on_startup": false,
-            "reload_demo_users_on_startup": false,
+            "reload_demo_users_on_startup": true,
             "reload_ontologies_on_startup": true,
             "clear_session_store": true,
             "log_bootup_actions": true,
@@ -369,6 +379,31 @@
                 "button_text": "Sign-in with SIGARRA"
             }
         },
-        "numCPUs": 1
+        "numCPUs": 1,
+        "testing": {
+            "apply_cooldown_every_x_tests": -1,
+            "cooldown_secs": 20
+        },
+        "docker": {
+            "active": false,
+            "reuse_checkpoints": false,
+            "create_checkpoints": false,
+            "destroy_existing_images_at_start": false,
+            "start_and_stop_containers_automatically" : false
+        },
+        "virtualbox": {
+            "active": false,
+            "create_snapshots": false,
+            "reuse_shapshots": false,
+            "restart_vm_every_x_tests": 1,
+            "restart_services_every_x_tests": 1,
+            "services_to_be_restarted": [
+                "virtuoso",
+                "elasticsearch",
+                "mongodb"
+            ],
+            "vmName": "dendroVagrantDemo",
+            "vmIP" : "127.0.0.1"
+        }
     }
 }
