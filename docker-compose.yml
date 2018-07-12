@@ -18,7 +18,7 @@ services:
 
   virtuoso:
     container_name: virtuoso-dendro
-    image: joaorosilva/virtuoso:7.2.4-for-dendro-0.3
+    image: joaorosilva/virtuoso:7.2.4-for-dendro-0.4
     ports:
       - "8890:8890"
       - "1111:1111"
