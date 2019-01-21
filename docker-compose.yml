@@ -2,7 +2,7 @@ version: '3'
 
 services:
   elasticsearch:
-    container_name: elasticsearch-dendro
+    container_name: elasticsearch-dendro-dev
     image: docker.elastic.co/elasticsearch/elasticsearch:6.2.2
     ports:
       - "9200:9200"
@@ -11,13 +11,14 @@ services:
       - "discovery.type=single-node"
       - "http.host=0.0.0.0"
       - "transport.host=127.0.0.1"
+      - "TAKE_FILE_OWNERSHIP=1"
     volumes:
       - ./volumes/elasticsearch:/usr/share/elasticsearch/data:consistent
     networks:
       - dendro
 
   virtuoso:
-    container_name: virtuoso-dendro
+    container_name: virtuoso-dendro-dev
     image: joaorosilva/virtuoso:7.2.4-for-dendro-0.4
     ports:
       - "8890:8890"
@@ -30,25 +31,27 @@ services:
     networks:
       - dendro
 
-  mysql:
-    container_name: mysql-dendro
-    image: mysql:8.0.3
+  mariadb:
+    container_name: mariadb-dendro-dev
+    image: mariadb:5.5.62
     ports:
       - "3306:3306"
     environment:
       - "MYSQL_ROOT_PASSWORD=r00t_p4ssw0rd"
+      - "MYSQL_DATABASE=dendro_data"
+      - "MYSQL_USER=dendro"
+      - "MYSQL_PASSWORD=dendr0_p4ssw0rd"
     volumes:
-      - ./volumes/mysql:/var/lib/mysql:consistent
+      - ./volumes/mariadb:/var/lib/mariadb
     networks:
       - dendro
 
   mongodb:
-    container_name: mongodb-dendro
+    container_name: mongodb-dendro-dev
     image: mongo:3.6.0
     ports:
       - 27017:27017
-    environment: 
-      - MONGO_INITDB_DATABASE=admin
+    environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=34857q98efhlajwehrlaeroiu2yq3948q2uweoiqwherluqywioerqhw0p92874983724rhqwelrhqweiuryoiqwerhlqwhjeflkawejrp9023475823y4rjhelkjrheiouryi
     volumes:
@@ -57,15 +60,14 @@ services:
       - dendro
     command: mongod --smallfiles --bind_ip_all
 
-
   dendro:
     container_name: dendro
-    image: joaorosilva/dendro:0.4
+    image: joaorosilva/dendro:latest
     ports:
       - "3001:3001"
     depends_on:
       - elasticsearch
-      - mysql
+      - mariadb
       - mongodb
       - virtuoso
     networks:

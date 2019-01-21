@@ -8,6 +8,7 @@ ENV NVM_DIR ${HOME}/.nvm
 ENV DENDRO_GITHUB_URL https://github.com/feup-infolab/dendro.git
 ENV DENDRO_INSTALL_DIR /dendro/dendro
 ENV DENDRO_USER_GROUP dendro
+ENV DENDRO_BRANCH dendrokeywords
 ######    CONSTANTS    ######
 
 # Prepare working directory
@@ -55,14 +56,16 @@ RUN chmod 0777 "$DENDRO_INSTALL_DIR/dendro.sh"
 # Run Dendro Installation
 USER "$DENDRO_USER"
 WORKDIR $DENDRO_INSTALL_DIR
+RUN git checkout "$DENDRO_BRANCH"
+RUN git pull
 RUN "$DENDRO_INSTALL_DIR/conf/scripts/install.sh"
 
 # Set permissions on installation folder (again)
 USER root
 
 # Copy configuration files
-COPY ./files_for_dendro_container/deployment_configs.json "$DENDRO_INSTALL_DIR/conf"
-COPY ./files_for_dendro_container/active_deployment_config.json "$DENDRO_INSTALL_DIR/conf"
+COPY ./files_for_dendro_container/active_deployment_config.yml "$DENDRO_INSTALL_DIR/conf"
+COPY ./files_for_dendro_container/docker.yml "$DENDRO_INSTALL_DIR/conf/deployment_configs"
 
 RUN chown -R "$DENDRO_USER":"$DENDRO_USER_GROUP" "$DENDRO_INSTALL_DIR"
 RUN chmod 0777 "$DENDRO_INSTALL_DIR/dendro.sh"

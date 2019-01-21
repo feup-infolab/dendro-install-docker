@@ -4,10 +4,10 @@ HOME=/home/$(whoami)
 INSTALL_DIR="/dendro/dendro"
 NODE_VERSION="$(cat $INSTALL_DIR/.nvmrc)"
 
-ELASTICSEARCH_HOST="elasticsearch-dendro"
-MONGO_HOST="mongodb-dendro"
-MYSQL_HOST="mysql-dendro"
-VIRTUOSO_HOST="virtuoso-dendro"
+ELASTICSEARCH_HOST="127.0.0.1"
+MONGO_HOST="127.0.0.1"
+MARIADB_HOST="127.0.0.1"
+VIRTUOSO_HOST="127.0.0.1"
 
 # starts containers with the volumes mounted
 function wait_for_server_to_boot_on_port()
@@ -45,7 +45,7 @@ function wait_for_server_to_boot_on_port()
 #wait for all servers to boot up before starting dendro
 wait_for_server_to_boot_on_port $ELASTICSEARCH_HOST 9200
 wait_for_server_to_boot_on_port $MONGO_HOST 27017
-wait_for_server_to_boot_on_port $MYSQL_HOST 3306
+wait_for_server_to_boot_on_port $MARIADB_HOST 3306
 wait_for_server_to_boot_on_port $VIRTUOSO_HOST 1111
 wait_for_server_to_boot_on_port $VIRTUOSO_HOST 8890
 

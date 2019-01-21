@@ -9,7 +9,7 @@ Dendro is the software powering [INESC TEC](https://dendro.inesctec.pt) and the 
 
 ![dendro UI](https://raw.githubusercontent.com/feup-infolab/dendro/master/public/images/Screen%20Shot%202017-04-04%20at%2012.22.08.png "Dendro UI")
 
-## Instructions 
+## Instructions
 
 To install Dendro using Docker, do the following:
 
